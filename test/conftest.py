@@ -29,7 +29,7 @@ def quickjs_renderer(views, bindings):
 
 @pytest.fixture
 def views():
-    with open('resources/views.js') as views:
+    with open(resource_path("views.js")) as views:
         return views.read()
 
 
@@ -40,13 +40,13 @@ def views_creator(views):
 
 @pytest.fixture
 def views_mock():
-    with open('resources/views.mock.js') as views:
+    with open(resource_path("views.mock.js")) as views:
         return views.read()
 
 
 @pytest.fixture
 def views_malformed():
-    with open('resources/views.js.malformed') as views:
+    with open(resource_path("views.js.malformed")) as views:
         return views.read()
 
 
@@ -76,7 +76,7 @@ def prototypes_creator(prototypes):
 
 @pytest.fixture
 def todolist_html():
-    with open('resources/todolist.html') as views:
+    with open(resource_path("todolist.html")) as views:
         return views.read()
 
 
@@ -118,3 +118,8 @@ def todolist_parameters():
             }
         ]
     }
+
+
+def resource_path(filename):
+    from os.path import dirname
+    return "%s/resources/%s" % (dirname(__file__), filename)
