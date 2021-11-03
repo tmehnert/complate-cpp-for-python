@@ -27,3 +27,6 @@ jobs:
 
       - name: Build
         run: pip install .
+
+      - name: Test
+        run: python -m pytest -v
