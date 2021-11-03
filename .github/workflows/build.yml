@@ -6,6 +6,8 @@ on:
   pull_request:
     branches: [ main ]
 
+env:
+  PY_COLORS: "1"
 
 jobs:
   linux-build:
