@@ -11,7 +11,7 @@ env:
 
 jobs:
   linux-build:
-    name: Linux, ${{matrix.python_version}}
+    name: Linux, Python ${{matrix.python_version}}
     runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
