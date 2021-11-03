@@ -8,6 +8,7 @@ on:
 
 env:
   PY_COLORS: "1"
+  COLUMNS: 120
 
 jobs:
   linux-build:
