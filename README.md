@@ -2,6 +2,7 @@
 
 *- Rendering of JSX based views in Python*
 
+[![Build](https://github.com/tmehnert/complate-cpp-for-python/actions/workflows/build.yml/badge.svg)](https://github.com/tmehnert/complate-cpp-for-python/actions/workflows/build.yml)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 
 [complate](https://complate.org) adapter that can be used in Python projects to render JSX based HTML views. It's a
