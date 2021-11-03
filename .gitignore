@@ -1,0 +1,10 @@
+.vscode
+.idea
+.pytest_cache
+build
+cmake-build-*
+node_modules
+_skbuild
+venv
+__pycache__/
+*.egg-info/
