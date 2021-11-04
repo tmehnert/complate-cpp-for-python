@@ -15,7 +15,8 @@ import pytest
 
 from complatecpp import QuickJsRendererBuilder
 
-from fixtures import Assets, TodoWithSlots, TodoWithProps
+from fixtures.assets import Assets
+from fixtures.todo import TodoWithSlots, TodoWithProps
 
 
 @pytest.fixture

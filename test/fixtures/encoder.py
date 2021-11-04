@@ -12,7 +12,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 import json
-from . import TodoWithSlots, TodoWithProps
+from .todo import TodoWithSlots, TodoWithProps
 
 
 class Encoder(json.JSONEncoder):

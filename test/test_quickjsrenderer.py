@@ -14,7 +14,7 @@
 import pytest
 import json
 from complatecpp import QuickJsRenderer, StringStream
-from fixtures import Encoder
+from fixtures.encoder import Encoder
 
 
 def test_construct_throws_render_undefined():
