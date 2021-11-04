@@ -13,7 +13,7 @@
 #  limitations under the License.
 import pytest
 import json
-from complatecpp import QuickJsRenderer, QuickJsRendererBuilder, StringStream
+from complatecpp import QuickJsRenderer, StringStream
 from fixtures import Encoder
 
 

@@ -13,7 +13,7 @@
 #  limitations under the License.
 import pytest
 
-from complatecpp import QuickJsRendererBuilder, Value
+from complatecpp import QuickJsRendererBuilder
 
 from fixtures import Assets, TodoWithSlots, TodoWithProps
 
