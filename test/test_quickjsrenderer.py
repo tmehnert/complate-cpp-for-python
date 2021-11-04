@@ -13,7 +13,8 @@
 #  limitations under the License.
 import pytest
 import json
-from complatecpp import QuickJsRenderer, QuickJsRendererBuilder, StringStream
+from complatecpp import QuickJsRenderer, StringStream
+from fixtures.encoder import Encoder
 
 
 def test_construct_throws_render_undefined():
@@ -32,11 +33,11 @@ def test_render_dict_throws_view_undefined(views):
         renderer.render_tostring("MissingView", {})
 
 
-def test_render_dict(quickjs_renderer, todolist_dict_parameters, todolist_html):
+def test_render_dict(quickjs_renderer, todolist_parameters, todolist_html):
     stream = StringStream()
     quickjs_renderer.render(
         view="TodoList",
-        parameters=todolist_dict_parameters,
+        parameters=todolist_parameters,
         stream=stream
     )
     assert stream.str() == todolist_html
@@ -66,7 +67,7 @@ def test_render_json(quickjs_renderer, todolist_parameters, todolist_html):
     stream = StringStream()
     quickjs_renderer.render(
         view="TodoList",
-        parameters=json.dumps(todolist_parameters),
+        parameters=json.dumps(todolist_parameters, cls=Encoder),
         stream=stream
     )
     assert stream.str() == todolist_html
@@ -75,6 +76,6 @@ def test_render_json(quickjs_renderer, todolist_parameters, todolist_html):
 def test_render_json_tostring(quickjs_renderer, todolist_parameters, todolist_html):
     html = quickjs_renderer.render_tostring(
         view="TodoList",
-        parameters=json.dumps(todolist_parameters)
+        parameters=json.dumps(todolist_parameters, cls=Encoder)
     )
     assert html == todolist_html

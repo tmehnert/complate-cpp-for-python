@@ -15,7 +15,7 @@ import os
 
 from complatecpp import QuickJsRenderer
 
-from fixtures import TestStream
+from fixtures.teststream import TestStream
 
 
 def test_specialized():

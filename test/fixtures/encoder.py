@@ -11,6 +11,20 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
-from .assets import Assets
-from .todo import Todo
-from .teststream import TestStream
+import json
+from .todo import TodoWithSlots, TodoWithProps
+
+
+class Encoder(json.JSONEncoder):
+
+    def default(self, o):
+        if isinstance(o, TodoWithSlots) or isinstance(o, TodoWithProps):
+            return {
+                "updateLink": o.updateLink,
+                "veryLate": o.veryLate,
+                "needToBeDoneIn": o.needToBeDoneIn,
+                "description": o.description,
+                "what": o.what
+            }
+
+        return json.JSONEncoder.default(self, o)
