@@ -81,7 +81,7 @@ def todolist_html():
 
 
 @pytest.fixture
-def todolist_dict_parameters():
+def todolist_parameters():
     return {
         "todos": [
             Todo(what="Change the tires of your car",
@@ -94,28 +94,6 @@ def todolist_dict_parameters():
                  needToBeDoneIn="11 months",
                  veryLate=False,
                  updateLink="https://example.org/todos/5/update")
-        ]
-    }
-
-
-@pytest.fixture
-def todolist_parameters():
-    return {
-        "todos": [
-            {
-                "what": "Change the tires of your car",
-                "description": "You stored the tires at your mom's house.",
-                "needToBeDoneIn": "9 days",
-                "veryLate": True,
-                "updateLink": "https://example.org/todos/4/update"
-            },
-            {
-                "what": "Book a hotel for next summer",
-                "description": "Hopefully our situation is then better.",
-                "needToBeDoneIn": "11 months",
-                "veryLate": False,
-                "updateLink": "https://example.org/todos/5/update"
-            }
         ]
     }
 
