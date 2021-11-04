@@ -15,11 +15,11 @@ class TodoWithSlots:
     __slots__ = ["what", "description", "needToBeDoneIn", "veryLate", "updateLink"]
 
     def __init__(self, what, description, needToBeDoneIn, veryLate, updateLink):
-        self.updateLink = updateLink
-        self.veryLate = veryLate
-        self.needToBeDoneIn = needToBeDoneIn
-        self.description = description
         self.what = what
+        self.description = description
+        self.needToBeDoneIn = needToBeDoneIn
+        self.veryLate = veryLate
+        self.updateLink = updateLink
 
 
 class TodoWithProps:
