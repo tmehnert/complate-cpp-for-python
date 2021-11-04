@@ -12,13 +12,13 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 import json
-from . import Todo
+from . import TodoWithSlots, TodoWithProps
 
 
 class Encoder(json.JSONEncoder):
 
     def default(self, o):
-        if isinstance(o, Todo):
+        if isinstance(o, TodoWithSlots) or isinstance(o, TodoWithProps):
             return {
                 "updateLink": o.updateLink,
                 "veryLate": o.veryLate,

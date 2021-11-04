@@ -15,7 +15,7 @@ import pytest
 
 from complatecpp import QuickJsRendererBuilder, Value
 
-from fixtures import Assets, Todo
+from fixtures import Assets, TodoWithSlots, TodoWithProps
 
 
 @pytest.fixture
@@ -23,7 +23,7 @@ def quickjs_renderer(views, bindings):
     return QuickJsRendererBuilder() \
         .source(views) \
         .bindings(bindings) \
-        .prototypes([Assets, Todo]) \
+        .prototypes([Assets, TodoWithSlots, TodoWithProps]) \
         .unique()
 
 
@@ -66,7 +66,7 @@ def bindings_creator(bindings):
 
 @pytest.fixture
 def prototypes():
-    return [Todo, Assets]
+    return [Assets, TodoWithSlots, TodoWithProps]
 
 
 @pytest.fixture
@@ -84,16 +84,16 @@ def todolist_html():
 def todolist_parameters():
     return {
         "todos": [
-            Todo(what="Change the tires of your car",
-                 description="You stored the tires at your mom's house.",
-                 needToBeDoneIn="9 days",
-                 veryLate=True,
-                 updateLink="https://example.org/todos/4/update"),
-            Todo(what="Book a hotel for next summer",
-                 description="Hopefully our situation is then better.",
-                 needToBeDoneIn="11 months",
-                 veryLate=False,
-                 updateLink="https://example.org/todos/5/update")
+            TodoWithSlots(what="Change the tires of your car",
+                          description="You stored the tires at your mom's house.",
+                          needToBeDoneIn="9 days",
+                          veryLate=True,
+                          updateLink="https://example.org/todos/4/update"),
+            TodoWithProps(what="Book a hotel for next summer",
+                          description="Hopefully our situation is then better.",
+                          needToBeDoneIn="11 months",
+                          veryLate=False,
+                          updateLink="https://example.org/todos/5/update")
         ]
     }
 

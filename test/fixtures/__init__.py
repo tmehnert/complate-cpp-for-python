@@ -12,6 +12,6 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 from .assets import Assets
-from .todo import Todo
+from .todo import TodoWithSlots, TodoWithProps
 from .teststream import TestStream
 from .encoder import Encoder
