@@ -14,23 +14,21 @@
 
 
 class TodoWithSlots:
-    __slots__ = ["what", "description", "needToBeDoneIn", "veryLate", "updateLink"]
+    __slots__ = ["what", "description", "updateLink", "timespan"]
 
-    def __init__(self, what, description, needToBeDoneIn, veryLate, updateLink):
+    def __init__(self, what, description, updateLink, timespan):
         self.what = what
         self.description = description
-        self.needToBeDoneIn = needToBeDoneIn
-        self.veryLate = veryLate
         self.updateLink = updateLink
+        self.timespan = timespan
 
 
 class TodoWithProps:
-    def __init__(self, what, description, needToBeDoneIn, veryLate, updateLink):
+    def __init__(self, what, description, updateLink, timespan):
         self._what = what
         self._description = description
-        self._needToBeDoneIn = needToBeDoneIn
-        self._veryLate = veryLate
         self._updateLink = updateLink
+        self._timespan = timespan
 
     @property
     def what(self): return self._what
@@ -39,10 +37,7 @@ class TodoWithProps:
     def description(self): return self._description
 
     @property
-    def needToBeDoneIn(self): return self._needToBeDoneIn
-
-    @property
-    def veryLate(self): return self._veryLate
-
-    @property
     def updateLink(self): return self._updateLink
+
+    @property
+    def timespan(self): return self._timespan
