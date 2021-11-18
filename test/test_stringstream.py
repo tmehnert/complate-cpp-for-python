@@ -11,8 +11,6 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
-import os
-
 from complatecpp import StringStream
 
 
@@ -25,7 +23,7 @@ def test_write():
 def test_writeln():
     stream = StringStream()
     stream.writeln(string="7 chars", length=7)
-    assert stream.str() == "7 chars" + os.linesep
+    assert stream.str() == "7 chars\n"
 
 
 def test_flush():

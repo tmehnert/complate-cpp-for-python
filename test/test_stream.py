@@ -11,8 +11,6 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
-import os
-
 from complatecpp import QuickJsRenderer
 
 from fixtures.teststream import TestStream
@@ -24,7 +22,7 @@ def test_specialized():
     stream.write(' ', 1)
     stream.writeln('World   ', 5)
     stream.flush()
-    assert stream.str() == 'Hello World' + os.linesep
+    assert stream.str() == 'Hello World\n'
 
 
 def test_specialized_use_with_renderer(views_mock):
