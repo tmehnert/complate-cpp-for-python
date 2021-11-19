@@ -12,7 +12,7 @@ C++ binding and uses [complate-cpp](https://github.com/tmehnert/complate-cpp) un
 ## Getting started
 
 This project is still under early development. It may take a few more weeks until you see some documentation and samples
-here. Still some stuff zu cleanup, test and automate. :construction_worker:
+here. Still some stuff to clean up, test and automate. :construction_worker:
 
 ### Dependencies
 

@@ -13,6 +13,7 @@
 #  limitations under the License.
 import json
 from .todo import TodoWithSlots, TodoWithProps
+from .timespan import Timespan
 
 
 class Encoder(json.JSONEncoder):
@@ -21,10 +22,16 @@ class Encoder(json.JSONEncoder):
         if isinstance(o, TodoWithSlots) or isinstance(o, TodoWithProps):
             return {
                 "updateLink": o.updateLink,
-                "veryLate": o.veryLate,
-                "needToBeDoneIn": o.needToBeDoneIn,
                 "description": o.description,
-                "what": o.what
+                "what": o.what,
+                "timespan": o.timespan
+            }
+
+        if isinstance(o, Timespan):
+            return {
+                "amount": o.amount,
+                "unit": o.unit,
+                "veryLate": o.veryLate
             }
 
         return json.JSONEncoder.default(self, o)

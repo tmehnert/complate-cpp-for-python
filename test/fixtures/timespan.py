@@ -11,5 +11,12 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
-from .core import Value, Function, Stream, StringStream, Renderer
-from .quickjs import QuickJsRenderer, QuickJsRendererBuilder
+
+
+class Timespan:
+    __slots__ = ["amount", "unit", "veryLate"]
+
+    def __init__(self, amount, unit, veryLate):
+        self.amount = amount
+        self.unit = unit
+        self.veryLate = veryLate

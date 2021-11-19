@@ -11,8 +11,6 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
-import os
-
 from complatecpp import Stream
 
 
@@ -29,7 +27,7 @@ class TestStream(Stream):
 
     def writeln(self, string, length):
         self.data += string[0:length]
-        self.data += os.linesep
+        self.data += '\n'
 
     def flush(self):
         pass

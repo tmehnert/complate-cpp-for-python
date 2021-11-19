@@ -11,5 +11,17 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
-from .core import Value, Function, Stream, StringStream, Renderer
-from .quickjs import QuickJsRenderer, QuickJsRendererBuilder
+find_package(PythonLibs REQUIRED)
+
+pybind11_add_module(
+        quickjs MODULE
+        quickjs.cpp
+        prototypes.cpp
+        ${PROJECT_SOURCE_DIR}/src/utils/mapper.cpp
+)
+target_include_directories(
+        quickjs PUBLIC
+        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/src/utils>
+)
+target_link_libraries(quickjs PRIVATE complate::quickjs)
+install(TARGETS quickjs DESTINATION .)

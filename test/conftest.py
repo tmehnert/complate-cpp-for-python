@@ -17,14 +17,15 @@ from complatecpp import QuickJsRendererBuilder
 
 from fixtures.assets import Assets
 from fixtures.todo import TodoWithSlots, TodoWithProps
+from fixtures.timespan import Timespan
 
 
 @pytest.fixture
-def quickjs_renderer(views, bindings):
+def quickjs_renderer(views, bindings, prototypes):
     return QuickJsRendererBuilder() \
         .source(views) \
         .bindings(bindings) \
-        .prototypes([Assets, TodoWithSlots, TodoWithProps]) \
+        .prototypes(prototypes) \
         .unique()
 
 
@@ -67,7 +68,7 @@ def bindings_creator(bindings):
 
 @pytest.fixture
 def prototypes():
-    return [Assets, TodoWithSlots, TodoWithProps]
+    return [Assets, TodoWithSlots, TodoWithProps, Timespan]
 
 
 @pytest.fixture
@@ -87,14 +88,12 @@ def todolist_parameters():
         "todos": [
             TodoWithSlots(what="Change the tires of your car",
                           description="You stored the tires at your mom's house.",
-                          needToBeDoneIn="9 days",
-                          veryLate=True,
-                          updateLink="https://example.org/todos/4/update"),
+                          updateLink="https://example.org/todos/4/update",
+                          timespan=Timespan(amount=9, unit="days", veryLate=True)),
             TodoWithProps(what="Book a hotel for next summer",
                           description="Hopefully our situation is then better.",
-                          needToBeDoneIn="11 months",
-                          veryLate=False,
-                          updateLink="https://example.org/todos/5/update")
+                          updateLink="https://example.org/todos/5/update",
+                          timespan=Timespan(amount=11, unit="months", veryLate=False))
         ]
     }
 
