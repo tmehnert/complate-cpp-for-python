@@ -14,46 +14,12 @@
 *  limitations under the License.
  */
 #include <pybind11/pybind11.h>
-#include <pybind11/functional.h>
-#include <pybind11/stl.h>
-#include <complate/quickjs/quickjsrendererbuilder.h>
-#include "prototypes.h"
-
-using namespace std;
-using namespace complate;
-namespace py = pybind11;
+#include "quickjsrenderer.h"
+#include "quickjsrendererbuilder.h"
 
 PYBIND11_MODULE(quickjs, m) {
   m.doc() = "Python bindings for complate-cpp - QuickJs renderer";
 
-  py::class_<QuickJsRenderer, Renderer>(m, "QuickJsRenderer")
-      .def(py::init<const std::string &>(), py::arg("source"));
-
-  py::class_<QuickJsRendererBuilder>(m, "QuickJsRendererBuilder")
-      .def(py::init<>())
-      .def("source", py::overload_cast<string>(&QuickJsRendererBuilder::source),
-           py::arg("sourceStr"))
-      .def("source",
-           py::overload_cast<QuickJsRendererBuilder::SourceCreator>(
-               &QuickJsRendererBuilder::source),
-           py::arg("sourceCreator"))
-
-      .def("bindings",
-           py::overload_cast<Object>(&QuickJsRendererBuilder::bindings),
-           py::arg("bindingsObj"))
-      .def("bindings",
-           py::overload_cast<QuickJsRendererBuilder::BindingsCreator>(
-               &QuickJsRendererBuilder::bindings),
-           py::arg("bindingsCreator"))
-      .def("prototypes",
-           [](QuickJsRendererBuilder &builder, const py::list &types) {
-             builder.prototypes(Prototypes::create_prototypes(types));
-             return ref(builder);
-           })
-      .def("prototypes",
-           [](QuickJsRendererBuilder &builder, const py::function &creator) {
-             builder.prototypes(Prototypes::create_prototypes(creator()));
-             return ref(builder);
-           })
-      .def("unique", &QuickJsRendererBuilder::unique);
+  registerQuickJsRenderer(m);
+  registerQuickJsRendererBuilder(m);
 }

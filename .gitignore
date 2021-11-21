@@ -8,3 +8,5 @@ _skbuild
 venv
 __pycache__/
 *.egg-info/
+*.pyd
+src/complatecpp/lib/cmake

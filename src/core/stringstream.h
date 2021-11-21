@@ -15,20 +15,21 @@
  */
 #pragma once
 
-#include <complate/core/stream.h>
+#include <complate/core/stringstream.h>
+#include <pybind11/pybind11.h>
 
-namespace complate {
+static const char STRINGSTREAM_DOC_CLASS[] = R"DELIM(
+  Stream which stores rendered output as a string.
 
-class PyStream : public Stream {
-public:
-  void write(const char *str, int len) override {
-    PYBIND11_OVERRIDE_PURE(void, Stream, write, str, len);
-  }
+  Use str() to get the rendered output.
+)DELIM";
 
-  void writeln(const char *str, int len) override {
-    PYBIND11_OVERRIDE_PURE(void, Stream, writeln, str, len);
-  }
+void registerStringStream(pybind11::module_ &m) {
+  namespace py = pybind11;
+  using namespace complate;
 
-  void flush() override { PYBIND11_OVERRIDE_PURE(void, Stream, flush); }
-};
-} // namespace complate
+  py::class_<StringStream, Stream>(m, "StringStream")
+      .def(py::init<>(), "Construct a StringStream.")
+      .def("str", &StringStream::str, "Get the rendered output.")
+      .doc() = STRINGSTREAM_DOC_CLASS;
+}
