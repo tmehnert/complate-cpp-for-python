@@ -7,6 +7,10 @@ This guide should help you to get started.
 - [Generating views](#generating-views)
     - [Setup Pipeline](#setup-pipeline)
     - [Create your first JSX view](#create-your-first-jsx-view)
+- [Instantiate a renderer](#instantiate-a-renderer)
+  - [Using the QuickJsRendererBuilder](#using-the-quickjsrendererbuilder)
+  - [Global bindings for your views](#global-bindings-for-your-views)
+  - [Prototypes for your own classes](#prototypes-for-your-own-classes)
 - [Appendix JSX](#appendix-jsx)
     - [Reusable components](#reusable-components)
     - [UI logic on the server](#ui-logic-on-the-server)
@@ -129,6 +133,78 @@ import Greeting from "./greeting"
 // Use the name "Greeting", when refering this view from Python.
 renderer.registerView(Greeting)
 ```
+
+## Instantiate a renderer
+
+Now we go inside the Python code of your application and set up the renderer.
+
+### Using the QuickJsRendererBuilder
+
+For easy setup, use the Builder.
+
+`````python
+from complatecpp import QuickJsRendererBuilder
+
+renderer = QuickJsRendererBuilder() \
+    .source("<content-of-your-views.js>") \
+    .unique()
+`````
+
+### Global bindings for your views
+
+When instantiate a renderer you can pass a dict, which holds global variables that can be accessed from every view. The
+bindings can contain every type that complate supports and will be accessible as JavaScript globals. Just pass
+everything you want to use in a global context into the binding.
+
+`````python
+from complatecpp import QuickJsRendererBuilder
+
+bindings = {
+    "application": {
+        "name": "Example"
+    }
+}
+
+renderer = QuickJsRendererBuilder() \
+    .source("<content-of-your-views.js>") \
+    .bindings(bindings) \
+    .unique()
+`````
+
+### Prototypes for your own classes
+
+When you want to make your Python classes available in the JavaScript engine, you have to register a prototype for your
+class. After passed to the renderer, you can simply use them in the global bindings dict or in the view parameters dict.
+Your classes have to use *slots* or define *properties* in order to make the introspection to work.
+
+`````python
+from complatecpp import QuickJsRendererBuilder
+
+
+class PersonUsingSlots:
+    """ Using slots in your class """
+    __slots__ = ["name"]
+
+    def __init__(self, name):
+        self.name = name
+
+
+class PersonUsingProps:
+    """ Define props in your class """
+
+    def __init__(self, name):
+        self._name = name
+
+    @property
+    def name(self): return self._name
+
+
+# Both of the techniques will work with complate
+renderer = QuickJsRendererBuilder() \
+    .source("<content-of-your-views.js>") \
+    .prototypes([PersonUsingSlots, PersonUsingProps]) \
+    .unique()
+`````
 
 ## Appendix JSX
 
