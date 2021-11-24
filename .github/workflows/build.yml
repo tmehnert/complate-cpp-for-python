@@ -1,6 +1,7 @@
 name: Build
 
 on:
+  workflow_dispatch:
   push:
     branches: [ main ]
   pull_request:
@@ -9,6 +10,7 @@ on:
 env:
   PY_COLORS: "1"
   COLUMNS: 120
+  WINDOWS_DLL_NO_MANGLE: "libwinpthread-1.dll;libgcc_s_seh-1.dll"
 
 jobs:
   linux-build:
@@ -17,12 +19,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python_version:
-          - "3.6"
-          - "3.7"
-          - "3.8"
-          - "3.9"
-          - "3.10"
+        python_version: [ "3.6", "3.7", "3.8", "3.9", "3.10" ]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
@@ -35,7 +32,103 @@ jobs:
           python -m pip install -r requirements.txt
 
       - name: Build
-        run: pip install .
+        run: python -m pip wheel .
 
       - name: Test
-        run: python -m pytest -v
+        run: |
+          python -m pip install --no-index --find-links=. complate_cpp_for_python
+          python -m pytest -v
+
+
+  macos-build:
+    name: macOS, Python ${{matrix.python_version}}
+    runs-on: macos-10.15
+    strategy:
+      fail-fast: false
+      matrix:
+        python_version: [ "3.6", "3.7", "3.8", "3.9", "3.10" ]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{matrix.python_version}}
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+
+      - name: Build
+        run: python -m pip wheel .
+
+      - name: Test
+        run: |
+          python -m pip install --no-index --find-links=. complate_cpp_for_python
+          python -m pytest -v
+
+
+  windows-build:
+    name: Windows, Python ${{matrix.python_version}}
+    runs-on: windows-2019
+    env:
+      CC: C:/msys64/mingw64/bin/gcc
+      CXX: C:/msys64/mingw64/bin/g++
+    strategy:
+      fail-fast: false
+      matrix:
+        python_version: [ "3.6", "3.7", "3.8", "3.9", "3.10" ]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{matrix.python_version}}
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+          python -m pip install delvewheel==0.0.15
+
+      - name: Build
+        run: |
+          python -m pip wheel .
+          ls *.whl | % {python -m delvewheel repair -v -w . --add-path c:\\msys64\\mingw64\\bin --no-mangle "${{env.WINDOWS_DLL_NO_MANGLE}}" $_.fullname}
+      - name: Test
+        run: |
+          python -m pip install --no-index --find-links=. complate_cpp_for_python
+          python -m pytest -v
+
+
+  wheels-build:
+    name: ${{ matrix.os.name }}, Wheels
+    runs-on: ${{ matrix.os.image }}
+    needs: [linux-build, macos-build, windows-build]
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - { image: "ubuntu-20.04", name: "Linux"   }
+          - { image: "macos-10.15",  name: "macOS"   }
+          - { image: "windows-2019", name: "Windows" }
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install cibuildwheel==2.2.2
+      - name: Build wheels
+        env:
+          MACOSX_DEPLOYMENT_TARGET: "10.15"
+          CIBW_BEFORE_BUILD_WINDOWS: "pip install delvewheel==0.0.15"
+          CIBW_ENVIRONMENT_WINDOWS: >
+            CC=C:/msys64/mingw64/bin/gcc
+            CXX=C:/msys64/mingw64/bin/g++
+          CIBW_REPAIR_WHEEL_COMMAND_WINDOWS: "delvewheel repair -v -w {dest_dir} --add-path c:\\msys64\\mingw64\\bin --no-mangle ${{env.WINDOWS_DLL_NO_MANGLE}} {wheel}"
+        run: python -m cibuildwheel --output-dir wheelhouse
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: wheels
+          path: ./wheelhouse/*.whl
