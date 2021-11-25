@@ -137,6 +137,7 @@ jobs:
   sdist-build:
     name: Source Distribution
     runs-on: ubuntu-20.04
+    needs: [linux-build, macos-build, windows-build]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
