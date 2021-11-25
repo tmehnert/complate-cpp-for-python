@@ -1,5 +1,6 @@
 exclude .nvmrc
 exclude .clang-format
+include *.in
 include *.js
 include *.json
 include *.md
