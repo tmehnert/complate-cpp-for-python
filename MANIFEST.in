@@ -1,0 +1,19 @@
+exclude .nvmrc
+exclude .clang-format
+include *.js
+include *.json
+include *.md
+include *.py
+include *.toml
+include *.txt
+include LICENSE
+recursive-include cmake *.cmake
+recursive-include src *.cpp
+recursive-include src *.h
+recursive-include src *.txt
+recursive-include test *.html
+recursive-include test *.js
+recursive-include test *.malformed
+recursive-include test *.py
+recursive-include views *.js
+recursive-include views *.jsx
