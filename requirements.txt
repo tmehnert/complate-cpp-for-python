@@ -1,8 +1,16 @@
+atomicwrites==1.4.0
 attrs==21.2.0
+build==0.7.0
+check-manifest==0.47
+colorama==0.4.4
+distro==1.6.0
 iniconfig==1.1.1
 packaging==21.2
+pep517==0.12.0
 pluggy==1.0.0
 py==1.10.0
 pyparsing==2.4.7
 pytest==6.2.5
+scikit-build==0.12.0
 toml==0.10.2
+tomli==1.2.2

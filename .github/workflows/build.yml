@@ -36,7 +36,7 @@ jobs:
 
       - name: Test
         run: |
-          python -m pip install --no-index --find-links=. complate_cpp_for_python
+          python -m pip install --no-index --find-links=. complate-cpp-for-python
           python -m pytest -v
 
 
@@ -63,7 +63,7 @@ jobs:
 
       - name: Test
         run: |
-          python -m pip install --no-index --find-links=. complate_cpp_for_python
+          python -m pip install --no-index --find-links=. complate-cpp-for-python
           python -m pytest -v
 
 
@@ -95,7 +95,7 @@ jobs:
           ls *.whl | % {python -m delvewheel repair -v -w . --add-path c:\\msys64\\mingw64\\bin --no-mangle "${{env.WINDOWS_DLL_NO_MANGLE}}" $_.fullname}
       - name: Test
         run: |
-          python -m pip install --no-index --find-links=. complate_cpp_for_python
+          python -m pip install --no-index --find-links=. complate-cpp-for-python
           python -m pytest -v
 
 
@@ -132,3 +132,33 @@ jobs:
         with:
           name: wheels
           path: ./wheelhouse/*.whl
+
+
+  sdist-build:
+    name: Source Distribution
+    runs-on: ubuntu-20.04
+    needs: [linux-build, macos-build, windows-build]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+
+      - name: Check Manifest
+        run: check-manifest -v
+
+      - name: Build
+        run: python setup.py sdist
+
+      - name: Test
+        run: |
+          python -m pip install --no-binary complate-cpp-for-python --find-links=dist complate-cpp-for-python
+          python -m pytest -v
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: sdist
+          path: ./dist/*.tar.gz
