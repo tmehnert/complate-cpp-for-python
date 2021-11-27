@@ -15,5 +15,6 @@
     "@babel/plugin-transform-react-jsx": "^7.14.9",
     "faucet-pipeline-esnext": "^2.1.7",
     "faucet-pipeline-js": "^2.1.7"
-  }
+  },
+  "version": "0.0.1"
 }
