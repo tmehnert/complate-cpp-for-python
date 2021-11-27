@@ -13,9 +13,16 @@
 #  limitations under the License.
 from skbuild import setup
 from setuptools import find_packages
+from pathlib import Path
+
+
+def read_version():
+    return Path('VERSION').read_text().replace('\n', '').replace('\r\n', '').strip()
+
 
 setup(
     packages=find_packages(where='src'),
+    version=read_version(),
     package_dir={"": "src"},
     cmake_install_dir="src/complatecpp",
     include_package_data=True,
