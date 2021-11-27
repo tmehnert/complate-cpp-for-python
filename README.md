@@ -11,12 +11,16 @@ C++ binding and uses [complate-cpp](https://github.com/tmehnert/complate-cpp) un
 
 ## Getting started
 
-This project is still under early development. It may take a few more weeks until you see some documentation and samples
-here. Still some stuff to clean up, test and automate. :construction_worker:
-
 ### Usage
 
 For a detailed description how to use this library checkout out the [User Guide](https://github.com/tmehnert/complate-cpp-for-python/blob/main/USER_GUIDE.md).
+
+### Installation
+This library is published on PyPI, so you can install it with pip. 
+
+```shell
+pip install complate-cpp-for-python
+```
 
 ### Dependencies
 
