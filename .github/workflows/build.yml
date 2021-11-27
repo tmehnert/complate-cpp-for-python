@@ -1,6 +1,7 @@
 name: Build
 
 on:
+  workflow_call:
   workflow_dispatch:
   push:
     branches: [ main ]
@@ -126,12 +127,12 @@ jobs:
             CC=C:/msys64/mingw64/bin/gcc
             CXX=C:/msys64/mingw64/bin/g++
           CIBW_REPAIR_WHEEL_COMMAND_WINDOWS: "delvewheel repair -v -w {dest_dir} --add-path c:\\msys64\\mingw64\\bin --no-mangle ${{env.WINDOWS_DLL_NO_MANGLE}} {wheel}"
-        run: python -m cibuildwheel --output-dir wheelhouse
+        run: python -m cibuildwheel --output-dir dist
 
       - uses: actions/upload-artifact@v2
         with:
-          name: wheels
-          path: ./wheelhouse/*.whl
+          name: dist
+          path: ./dist/*.whl
 
 
   sdist-build:
@@ -160,5 +161,5 @@ jobs:
 
       - uses: actions/upload-artifact@v2
         with:
-          name: sdist
+          name: dist
           path: ./dist/*.tar.gz
