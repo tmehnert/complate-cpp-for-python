@@ -4,6 +4,7 @@
 
 [![Build](https://github.com/tmehnert/complate-cpp-for-python/actions/workflows/build.yml/badge.svg)](https://github.com/tmehnert/complate-cpp-for-python/actions/workflows/build.yml)
 [![Python](https://img.shields.io/badge/python-3.6%2B-blue)](https://www.python.org/downloads/)
+[![PyPI](https://img.shields.io/pypi/v/complate-cpp-for-python)](https://pypi.org/project/complate-cpp-for-python/)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/tmehnert/complate-cpp-for-python/blob/main/LICENSE)
 
 [complate](https://complate.org) adapter that can be used in Python projects to render JSX based HTML views. It's a
