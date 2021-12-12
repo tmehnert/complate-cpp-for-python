@@ -17,7 +17,7 @@ message("-- Fetching complate...")
 FetchContent_Declare(
     complate
     GIT_REPOSITORY https://github.com/tmehnert/complate-cpp.git
-    GIT_TAG v0.1.0
+    GIT_TAG v0.1.1
     GIT_SHALLOW 1
 )
 
