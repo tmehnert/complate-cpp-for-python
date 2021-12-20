@@ -69,5 +69,6 @@ void registerQuickJsRendererBuilder(pybind11::module_ &m) {
           "Pass a function that return Python classes, you want to use.")
       .def("unique", &QuickJsRendererBuilder::unique,
            "Build a renderer instance")
+      .def("creator", &QuickJsRendererBuilder::creator)
       .doc() = QUICKJS_RENDERER_BUILDER_DOC_CLASS;
 }

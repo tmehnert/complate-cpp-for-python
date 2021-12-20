@@ -32,3 +32,16 @@ def test_build_with_creators(views_creator, bindings_creator, prototypes_creator
         .unique()
     html = renderer.render_tostring("TodoList", todolist_parameters)
     assert html == todolist_html
+
+
+def test_creator(views_creator, bindings_creator, prototypes_creator, todolist_html, todolist_parameters):
+    creator = QuickJsRendererBuilder() \
+        .source(views_creator) \
+        .bindings(bindings_creator) \
+        .prototypes(prototypes_creator) \
+        .creator()
+
+    html = creator().render_tostring("TodoList", todolist_parameters)
+    assert html == todolist_html
+    html = creator().render_tostring("TodoList", todolist_parameters)
+    assert html == todolist_html
