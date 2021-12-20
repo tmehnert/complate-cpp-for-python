@@ -20,6 +20,20 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
+class PyRenderer : public complate::Renderer {
+public:
+  void render(const std::string &view, const complate::Object &parameters,
+              complate::Stream &stream) override {
+    PYBIND11_OVERRIDE_PURE(void, complate::Renderer, render, view, parameters, stream);
+  };
+
+
+  void render(const std::string &view, const std::string &parameters,
+              complate::Stream &stream) override {
+    PYBIND11_OVERRIDE_PURE(void, complate::Renderer, render, view, parameters, stream);
+  }
+};
+
 static const char RENDERER_DOC_CLASS[] = R"DELIM(
   Renderer interface to get HTML output from a view and it's parameters.
 
@@ -34,7 +48,8 @@ void registerRenderer(pybind11::module_ &m) {
   using namespace std;
   using namespace complate;
 
-  py::class_<Renderer>(m, "Renderer")
+  py::class_<Renderer, PyRenderer>(m, "Renderer")
+      .def(py::init<>(), "Does nothing. Renderer is an interface.")
       .def("render",
            py::overload_cast<const string &, const string &, Stream &>(
                &Renderer::render),
