@@ -12,4 +12,5 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 from .core import Value, Function, Stream, StringStream, Renderer
+from .reevaluatingrenderer import ReEvaluatingRenderer
 from .quickjs import QuickJsRenderer, QuickJsRendererBuilder
