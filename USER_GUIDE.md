@@ -11,6 +11,7 @@ This guide should help you to get started.
     - [Using the QuickJsRendererBuilder](#using-the-quickjsrendererbuilder)
     - [Global bindings for your views](#global-bindings-for-your-views)
     - [Prototypes for your own classes](#prototypes-for-your-own-classes)
+    - [ReEvaluatingRenderer](#reevaluatingrenderer)
 - [Rendering HTML](#rendering-html)
     - [Render to string](#render-to-string)
     - [Render to stream](#render-to-stream)
@@ -211,6 +212,26 @@ renderer = QuickJsRendererBuilder() \
     .prototypes([PersonUsingSlots, PersonUsingProps]) \
     .unique()
 `````
+
+### ReEvaluatingRenderer
+
+This renderer is a development tool to make your work more comfortable. It can wrap any other renderer and instantiate
+it every time you render a view. Because of this behaviour you can edit your JSX and get the changes without having to
+restart your application. You shouldn't use this in your release, because it involves a lot of overhead.
+
+```python
+from complatecpp import QuickJsRendererBuilder, ReEvaluatingRenderer
+
+def load_views_js():
+  return "<content-of-your-views.js>"
+
+creator = QuickJsRendererBuilder() \
+  .source(load_views_js) \
+  .creator()
+
+# Use this renderer like any other renderer
+renderer = ReEvaluatingRenderer(creator)
+```
 
 ## Rendering HTML
 
